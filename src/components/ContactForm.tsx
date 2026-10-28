@@ -44,13 +44,21 @@ export default function ContactForm() {
           phone: form.phone.trim(),
           email: form.email.trim().toLowerCase(),
           pin_code: form.pinCode.trim(),
+          notes: form.message.trim() || null,
           source: 'website-contact',
         }),
       })
-      if (!res.ok) throw new Error('Submission failed.')
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Submission failed. Please check your details and try again.')
+      }
       setSubmitted(true)
-    } catch {
-      setSubmitError('Something went wrong. Please try calling or WhatsApp us directly.')
+    } catch (err: unknown) {
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try calling or WhatsApp us directly.'
+      )
     } finally {
       setSubmitting(false)
     }

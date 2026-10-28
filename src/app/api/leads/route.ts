@@ -65,6 +65,10 @@ export async function POST(req: NextRequest) {
       budget_range: body.budget_range || null,
       estimate_low: body.estimate_low || null,
       estimate_high: body.estimate_high || null,
+      notes: body.notes || body.message || null,
+      utm_source: body.utm_source || null,
+      utm_medium: body.utm_medium || null,
+      utm_campaign: body.utm_campaign || null,
       source: body.source || 'website',
       status: 'new',
     }
