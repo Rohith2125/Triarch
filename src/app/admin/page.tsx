@@ -611,8 +611,22 @@ export default function AdminPage() {
   }, [tab, loadLeads, loadProjects, loadBrands, loadPricing, leads.length, projects.length, brands.length, pricingRules.length])
 
   async function signOut() {
-    await supabase.auth.signOut()
-    window.location.reload()
+    try {
+      await Promise.race([
+        supabase.auth.signOut(),
+        new Promise(resolve => setTimeout(resolve, 2000)),
+      ])
+    } catch (err) {
+      console.warn('Sign out warning:', err)
+    } finally {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.clear()
+          sessionStorage.clear()
+        } catch {}
+        window.location.href = '/admin'
+      }
+    }
   }
 
   return (
@@ -632,15 +646,16 @@ export default function AdminPage() {
       {/* Header */}
       <div className="bg-white border-b border-[#e8e2d6] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Triarch Admin" className="h-8 w-auto" />
+          <img src="/logo.svg" alt="Triarch Admin" className="h-8 w-auto" />
           <span className="text-xs uppercase tracking-wider text-[#c4a46b] font-medium border-l border-[#e8e2d6] pl-3">
             Management Portal
           </span>
         </div>
         <button
           id="admin-signout"
+          type="button"
           onClick={signOut}
-          className="flex items-center gap-1.5 text-xs text-[#5a5450] hover:text-[#1a1a1a] transition-colors"
+          className="flex items-center gap-1.5 text-xs text-[#5a5450] hover:text-[#1a1a1a] transition-colors cursor-pointer px-3 py-1.5 rounded hover:bg-[#faf8f5] border border-transparent hover:border-[#e8e2d6]"
         >
           <LogOut size={14} /> Sign Out
         </button>

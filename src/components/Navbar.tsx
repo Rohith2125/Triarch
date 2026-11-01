@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
@@ -14,6 +15,7 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -22,6 +24,10 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
 
   return (
     <header
@@ -35,10 +41,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
-            src="/logo.png"
+            src="/logo.svg"
             alt="Triarch Interiors"
             width={160}
-            height={48}
+            height={78}
             className="h-10 md:h-12 w-auto object-contain"
             priority
           />

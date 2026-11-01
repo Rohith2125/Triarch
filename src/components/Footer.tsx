@@ -1,8 +1,14 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { MapPin, Phone, MessageCircle } from 'lucide-react'
 
 export default function Footer() {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
   return (
     <footer className="bg-[#1a1a1a] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
@@ -10,10 +16,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="Triarch Interiors"
               width={160}
-              height={48}
+              height={78}
               className="h-10 w-auto mb-5 brightness-0 invert"
             />
             <p className="text-[#a09890] text-sm leading-relaxed max-w-sm">

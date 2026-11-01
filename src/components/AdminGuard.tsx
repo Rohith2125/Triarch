@@ -39,7 +39,7 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#faf8f5] p-4">
         <div className="bg-white border border-[#e8e2d6] p-8 w-full max-w-sm">
-          <img src="/logo.png" alt="Triarch Interiors" className="h-10 w-auto mb-8" />
+          <img src="/logo.svg" alt="Triarch Interiors" className="h-10 w-auto mb-8" />
           <h1 className="font-display text-2xl text-[#1a1a1a] mb-6">Admin Sign In</h1>
           <form onSubmit={signIn} className="space-y-4">
             <div>

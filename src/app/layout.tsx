@@ -47,6 +47,16 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon-512.png',
+  },
 };
 
 export default function RootLayout({
